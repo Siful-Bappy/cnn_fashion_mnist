@@ -1,0 +1,12 @@
+# .gitignore
+dataset/
+*.csv
+*.ubyte
+*.pt
+*.pth
+checkpoints/
+runs/
+outputs/
+logs/
+__pycache__/
+.ipynb_checkpoints/
