@@ -1,6 +1,7 @@
 import torch
 import pandas as pd
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset, DataLoader
@@ -12,6 +13,7 @@ import data_loader
 import model
 
 torch.manual_seed(42)
+os.makedirs("checkpoints", exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
@@ -43,7 +45,7 @@ test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, pin_memory=
 
 # learning rate & epochs
 learning_rate = 0.01
-num_epochs = 15
+num_epochs = 100
 
 # model, loss, optimizer
 # model = model.SimpleCNN(input_feature=1)
@@ -80,3 +82,7 @@ for epoch in range(num_epochs):
 
   avg_loss = total_epoch_loss/len(train_loader)
   print(f'Epoch: {epoch + 1} Loss: {avg_loss}')
+
+torch.save(model.state_dict(), 'checkpoints/cnn_fashion_mnist_epoch.pth')
+print("Model saved to: checkpoints/cnn_fashion_mnist_epoch.pth")
+
