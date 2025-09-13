@@ -45,7 +45,7 @@ test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, pin_memory=
 
 # learning rate & epochs
 learning_rate = 0.01
-num_epochs = 100
+num_epochs = 300
 
 # model, loss, optimizer
 # model = model.SimpleCNN(input_feature=1)
@@ -83,6 +83,14 @@ for epoch in range(num_epochs):
   avg_loss = total_epoch_loss/len(train_loader)
   print(f'Epoch: {epoch + 1} Loss: {avg_loss}')
 
-torch.save(model.state_dict(), 'checkpoints/cnn_fashion_mnist_epoch.pth')
-print("Model saved to: checkpoints/cnn_fashion_mnist_epoch.pth")
+# torch.save(model.state_dict(), 'checkpoints/cnn_fashion_mnist_epoch.pth')
+torch.save({
+    'epoch': epoch,
+    'model_state_dict': model.state_dict(),
+    'optimizer_state_dict': optimizer.state_dict(),
+    'loss': avg_loss,
+}, "checkpoints/cnn_fmnist_checkpoint.pth")
+
+# print("Model saved to: checkpoints/cnn_fashion_mnist_epoch.pth")
+print("Checkpoint saved to: checkpoints/cnn_fmnist_checkpoint.pth")
 
